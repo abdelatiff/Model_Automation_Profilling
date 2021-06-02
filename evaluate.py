@@ -7,6 +7,7 @@ from sklearn.metrics import confusion_matrix,classification_report
 import pandas as pd
 import pickle
 import os
+import subprocess
 from pathlib import Path
 params = yaml.safe_load(open('params.yaml'))['evaluate']
 repo_path = Path(__file__).parent.parent
@@ -21,6 +22,7 @@ del X_test['Unnamed: 0']
 del y_test['Unnamed: 0']
 with open(sys.argv[3],'rb') as mod:
 	model = pickle.load(mod)
+subprocess.run(["mkdir", "Metrics"])
 Metrics_path = os.path.join('Metrics', 'metrics.json')
 
 def main(X_test,y_test,model):
