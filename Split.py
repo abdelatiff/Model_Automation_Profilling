@@ -5,6 +5,7 @@ import sys
 import yaml
 import os
 import random
+import subprocess
 params = yaml.safe_load(open('params.yaml'))['Split']
 
 if len(sys.argv) !=3 :
@@ -13,10 +14,12 @@ if len(sys.argv) !=3 :
     sys.exit(1)
 split = params['split']
 random.seed(params['seed'])
-X_train = os.path.join('data_Profiling','train' ,  'X_train.csv')
-X_test = os.path.join('data_Profiling','test' , 'X_test.csv')
-y_train = os.path.join('data_Profiling','train', 'y_train.csv')
-y_test = os.path.join('data_Profiling', 'test', 'y_test.csv')
+subprocess.run(["mkdir", "data_/train"])
+subprocess.run(["mkdir", "data_/test"])
+X_train = os.path.join('data_','train' ,  'X_train.csv')
+X_test = os.path.join('data_','test' , 'X_test.csv')
+y_train = os.path.join('data_','train', 'y_train.csv')
+y_test = os.path.join('data_', 'test', 'y_test.csv')
 X_44=pd.read_csv(sys.argv[1])  # Features
 y_44=pd.read_csv(sys.argv[2])
 del X_44["Unnamed: 0"]
