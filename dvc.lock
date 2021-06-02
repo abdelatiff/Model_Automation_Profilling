@@ -59,20 +59,20 @@ stages:
       size: 4185581
     params:
       params.yaml:
-        Modelling.max_depth: 15
+        Modelling.max_depth: 17
         Modelling.min_samples_split: 5
-        Modelling.n_estimators: 50
+        Modelling.n_estimators: 60
         Modelling.random_state: 100
     outs:
     - path: Models/profilling.pickle
-      md5: 9f3b18bff6890f42dedd4e62ae38ddb2
-      size: 154690305
+      md5: ce4fd365348c5d5c0e6e399214f98ab8
+      size: 254612519
   evaluate:
     cmd: python3 evaluate.py data_/test/X_test.csv data_/test/y_test.csv Models/profilling.pickle
     deps:
     - path: Models/profilling.pickle
-      md5: 9f3b18bff6890f42dedd4e62ae38ddb2
-      size: 154690305
+      md5: ce4fd365348c5d5c0e6e399214f98ab8
+      size: 254612519
     - path: data_/test/X_test.csv
       md5: d735b5d973f6fe4c89bc6a8b2527af36
       size: 24821083
@@ -81,5 +81,5 @@ stages:
       size: 1046613
     outs:
     - path: Metrics/metrics.json
-      md5: 7fb959118394987a6a686d4bc0c5732e
+      md5: b51f8e8aca9edf5b1810b2c6202c699e
       size: 32
