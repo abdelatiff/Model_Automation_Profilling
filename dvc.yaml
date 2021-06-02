@@ -1,0 +1,46 @@
+stages:
+  features_extraction:
+    cmd: python3 features_extraction.py data_/Tor_Data_Vers2.csv
+    deps:
+    - data_/Tor_Data_Vers2.csv
+    - features_extraction.py
+    params:
+    - features_extraction.delimiter
+    outs:
+    - data_/Output_features_extraction.csv
+  Split:
+    cmd: python3 Split.py data_/X_train_Profiling_new.csv data_/y_train_Profiling_new.csv
+    deps:
+    - Split.py
+    - data_/X_train_Profiling_new.csv
+    - data_/y_train_Profiling_new.csv
+    params:
+    - Split.seed
+    - Split.split
+    outs:
+    - data_/test/X_test.csv
+    - data_/test/y_test.csv
+    - data_/train/X_train.csv
+    - data_/train/y_train.csv
+  Modelling:
+    cmd: python3 Modelling.py data_/train/X_train.csv data_/train/y_train.csv
+    deps:
+    - Modelling.py
+    - data_/train/X_train.csv
+    - data_/train/y_train.csv
+    params:
+    - Modelling.max_depth
+    - Modelling.min_samples_split
+    - Modelling.n_estimators
+    - Modelling.random_state
+    outs:
+    - Models/profilling.pickle
+  evaluate:
+    cmd: python3 evaluate.py data_/test/X_test.csv data_/test/y_test.csv Models/profilling.pickle
+    deps:
+    - Models/profilling.pickle
+    - data_/test/X_test.csv
+    - data_/test/y_test.csv
+    metrics:
+    - Metrics/metrics.json:
+        cache: false

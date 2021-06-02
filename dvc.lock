@@ -1,0 +1,85 @@
+schema: '2.0'
+stages:
+  features_extraction:
+    cmd: python3 features_extraction.py data_/Tor_Data_Vers2.csv
+    deps:
+    - path: data_/Tor_Data_Vers2.csv
+      md5: 763ae66614a27eb6510997155c5d33d0
+      size: 45063690
+    - path: features_extraction.py
+      md5: e8cf036f722d2fe955768d23671ccef4
+      size: 1518
+    params:
+      params.yaml:
+        features_extraction.delimiter: "','"
+    outs:
+    - path: data_/Output_features_extraction.csv
+      md5: d9ab25eb03a359e776a0e9ade1719e8f
+      size: 2965680
+  Split:
+    cmd: python3 Split.py data_/X_train_Profiling_new.csv data_/y_train_Profiling_new.csv
+    deps:
+    - path: Split.py
+      md5: 565ce306624af1b838c033b3704a7df9
+      size: 1056
+    - path: data_/X_train_Profiling_new.csv
+      md5: 6ab3e81f7b86c79db1ebae6f6f35a53b
+      size: 124140972
+    - path: data_/y_train_Profiling_new.csv
+      md5: 923a5938c93c2d567f81848c410a5376
+      size: 5232191
+    params:
+      params.yaml:
+        Split.seed: 20170428
+        Split.split: 0.2
+    outs:
+    - path: data_/test/X_test.csv
+      md5: d735b5d973f6fe4c89bc6a8b2527af36
+      size: 24821083
+    - path: data_/test/y_test.csv
+      md5: a5deb1b694bb851174ac2a981b4f0625
+      size: 1046613
+    - path: data_/train/X_train.csv
+      md5: 1f2db0952379b827300f2bedcdaa1507
+      size: 99329422
+    - path: data_/train/y_train.csv
+      md5: 7580a431b2e75a61c937fcb79351b70f
+      size: 4185581
+  Modelling:
+    cmd: python3 Modelling.py data_/train/X_train.csv data_/train/y_train.csv
+    deps:
+    - path: Modelling.py
+      md5: bd478171403e41dcb1378e25a3a744cf
+      size: 1357
+    - path: data_/train/X_train.csv
+      md5: 1f2db0952379b827300f2bedcdaa1507
+      size: 99329422
+    - path: data_/train/y_train.csv
+      md5: 7580a431b2e75a61c937fcb79351b70f
+      size: 4185581
+    params:
+      params.yaml:
+        Modelling.max_depth: 15
+        Modelling.min_samples_split: 5
+        Modelling.n_estimators: 50
+        Modelling.random_state: 100
+    outs:
+    - path: Models/profilling.pickle
+      md5: 9f3b18bff6890f42dedd4e62ae38ddb2
+      size: 154690305
+  evaluate:
+    cmd: python3 evaluate.py data_/test/X_test.csv data_/test/y_test.csv Models/profilling.pickle
+    deps:
+    - path: Models/profilling.pickle
+      md5: 9f3b18bff6890f42dedd4e62ae38ddb2
+      size: 154690305
+    - path: data_/test/X_test.csv
+      md5: d735b5d973f6fe4c89bc6a8b2527af36
+      size: 24821083
+    - path: data_/test/y_test.csv
+      md5: a5deb1b694bb851174ac2a981b4f0625
+      size: 1046613
+    outs:
+    - path: Metrics/metrics.json
+      md5: 7fb959118394987a6a686d4bc0c5732e
+      size: 32
