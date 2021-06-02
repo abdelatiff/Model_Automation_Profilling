@@ -6,6 +6,7 @@ import numpy as np
 import yaml
 #import cPickle
 import pandas as pd
+import subprocess
 params = yaml.safe_load(open('params.yaml'))['Modelling']
 
 if len(sys.argv) !=3 :
@@ -24,6 +25,7 @@ max_depth = params['max_depth']
 n_estimators = params['n_estimators']
 min_samples_split = params['min_samples_split']
 random_state = params['random_state']
+subprocess.run(["mkdir", "Models"])
 Models_dump = os.path.join('Models', 'profilling.pickle')
 def train():
 	clf4 = RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',
