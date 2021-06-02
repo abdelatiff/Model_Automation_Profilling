@@ -14,7 +14,7 @@ if len(sys.argv) !=2 :
 
 deli =params['delimiter'] 
 path = sys.argv[1]
-output_train = os.path.join('data_Profiling', 'Output_features_extraction.csv')
+output_train = os.path.join('data_', 'Output_features_extraction.csv')
 def LabelEncoder_(data,column):
 	label_encoder = LabelEncoder()
 	encoding_vector= label_encoder.fit_transform(data[column])
