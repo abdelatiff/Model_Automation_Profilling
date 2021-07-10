@@ -6,7 +6,7 @@ Split:
   seed: 20170428
 Modelling:
   seed: 20170428
-  max_depth: 10
+  max_depth: 20
   n_estimators: 70
   min_samples_split: 5
   random_state: 100
