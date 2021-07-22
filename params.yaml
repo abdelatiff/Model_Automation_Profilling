@@ -9,5 +9,5 @@ Modelling:
   max_depth: 10
   n_estimators: 70
   min_samples_split: 8
-  random_state: 100
+  random_state: 1000
 evaluate:
